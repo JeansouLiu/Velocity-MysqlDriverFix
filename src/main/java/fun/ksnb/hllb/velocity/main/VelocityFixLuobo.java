@@ -28,14 +28,21 @@ public class VelocityFixLuobo {
         if (!dataFile.exists()) {
             dataFile.mkdirs();
         }
-        String version = "8.0.25";
+        String version = "8.0.30";
         String jarName = "mysql-connector-java-" + version + ".jar";
+		try {
+            if (getClass("com.mysql.cj.jdbc.Driver") != null) return;
+            downloadFile("https://repo1.maven.org/maven2/mysql/mysql-connector-java/" + version + "/mysql-connector-java-" + version + ".jar", new File(dataFile, jarName));
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("MySql 驱动下载失败");
+        }
 //        反射入
         try {
             init();
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("MySql 驱动 贺兰大萝卜库 反射加载失败");
+            logger.error("MySql 驱动反射加载失败");
         }
         try {
             ClassLoader classLoader = this.getClass().getClassLoader();
@@ -43,12 +50,12 @@ public class VelocityFixLuobo {
             handle.invoke(classLoader, new File(dataFile, jarName).toURI().toURL());
         } catch (Throwable e) {
             e.printStackTrace();
-            logger.error("MySql 驱动 贺兰大萝卜库 反射加载失败");
+            logger.error("MySql 驱动反射加载失败");
         }
         if (getClass("com.mysql.cj.jdbc.Driver") == null) {
-            logger.error("MySql 驱动 贺兰大萝卜库 反射加载失败");
+            logger.error("MySql 驱动反射加载失败");
         } else {
-            logger.info("MySql 驱动 贺兰大萝卜库 加载成功");
+            logger.info("MySql 驱动加载成功");
         }
     }
 
