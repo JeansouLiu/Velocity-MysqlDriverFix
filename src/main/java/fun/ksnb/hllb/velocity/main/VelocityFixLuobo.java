@@ -30,13 +30,6 @@ public class VelocityFixLuobo {
         }
         String version = "8.0.25";
         String jarName = "mysql-connector-java-" + version + ".jar";
-        try {
-            if (getClass("com.mysql.cj.jdbc.Driver") != null) return;
-            downloadFile("https://maven.aliyun.com/repository/public/mysql/mysql-connector-java/" + version + "/mysql-connector-java-" + version + ".jar", new File(dataFile, jarName));
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("MySql 驱动 贺兰大萝卜库 下载失败");
-        }
 //        反射入
         try {
             init();
